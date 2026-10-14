@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AttackPathAnalysis",
+  "type": "object",
+  "$defs": {
+    "AttackPath": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rank", "node_ids", "edge_ids", "score", "exposure_index",
+        "entry_prior", "target_criticality", "steps"
+      ],
+      "properties": {
+        "rank": {"type": "integer", "minimum": 1},
+        "node_ids": {"type": "array", "minItems": 2, "items": {"type": "string"}},
+        "edge_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "score": {"type": "number", "minimum": 0, "maximum": 1},
+        "exposure_index": {"type": "number", "minimum": 0, "maximum": 100},
+        "entry_prior": {"type": "number", "minimum": 0, "maximum": 1},
+        "target_criticality": {"type": "number", "minimum": 0, "maximum": 100},
+        "steps": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "ControlOption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "kind", "target_id", "operational_cost"],
+      "properties": {
+        "id": {"type": "string"},
+        "label": {"type": "string"},
+        "kind": {"enum": ["node", "edge"]},
+        "target_id": {"type": "string"},
+        "operational_cost": {"type": "number", "exclusiveMinimum": 0, "maximum": 100},
+        "description": {"type": "string"}
+      }
+    },
+    "MetricSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exposure_index", "reachable_critical_assets",
+        "highest_risk_score", "path_count"
+      ],
+      "properties": {
+        "exposure_index": {"type": "number", "minimum": 0, "maximum": 100},
+        "reachable_critical_assets": {"type": "integer", "minimum": 0},
+        "highest_risk_score": {"type": "number", "minimum": 0, "maximum": 100},
+        "path_count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "RemediationResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scenario_id", "selected_controls", "cut_value", "total_cost",
+        "complete_cut", "message", "before_max_score", "after_max_score",
+        "before", "after", "cut_edge_ids", "cut_node_ids", "residual_paths"
+      ],
+      "properties": {
+        "scenario_id": {"type": "string"},
+        "selected_controls": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/ControlOption"}
+        },
+        "cut_value": {"type": "number", "minimum": 0},
+        "total_cost": {"type": "number", "minimum": 0},
+        "complete_cut": {"type": "boolean"},
+        "message": {"type": "string"},
+        "before_max_score": {"type": "number", "minimum": 0, "maximum": 1},
+        "after_max_score": {"type": "number", "minimum": 0, "maximum": 1},
+        "before": {"$ref": "#/$defs/MetricSnapshot"},
+        "after": {"$ref": "#/$defs/MetricSnapshot"},
+        "cut_edge_ids": {"type": "array", "items": {"type": "string"}},
+        "cut_node_ids": {"type": "array", "items": {"type": "string"}},
+        "residual_paths": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/AttackPath"}
+        }
+      }
+    }
+  }
+}

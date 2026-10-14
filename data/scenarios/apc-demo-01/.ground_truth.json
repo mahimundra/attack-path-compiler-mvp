@@ -1,0 +1,17 @@
+{
+  "scenario_id": "apc-demo-01",
+  "seed": 424242,
+  "expected_top_path": [
+    "attacker-ip-198-51-100-77",
+    "identity-ana-rao",
+    "device-eng-lt-042",
+    "role-etl-operator",
+    "resource-customer-exports-prod"
+  ],
+  "primary_evidence": [
+    "evt-000001",
+    "evt-000002",
+    "evt-000003",
+    "evt-000004"
+  ]
+}

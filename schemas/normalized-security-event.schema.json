@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NormalizedSecurityEvent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "timestamp",
+    "source",
+    "event_type",
+    "source_ref",
+    "target_ref"
+  ],
+  "properties": {
+    "event_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "source": {
+      "enum": ["auth", "endpoint", "network", "cloud", "identity", "data"]
+    },
+    "event_type": {
+      "enum": [
+        "network_connection",
+        "authentication",
+        "device_session",
+        "role_assumption",
+        "data_access",
+        "benign_activity"
+      ]
+    },
+    "source_ref": {"type": "string", "minLength": 1, "maxLength": 256},
+    "target_ref": {"type": "string", "minLength": 1, "maxLength": 256},
+    "session_id": {"type": ["string", "null"], "maxLength": 128},
+    "success": {"type": "boolean", "default": true},
+    "transition_feasibility": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 1,
+      "default": 0.5
+    },
+    "attributes": {"type": "object", "default": {}}
+  }
+}

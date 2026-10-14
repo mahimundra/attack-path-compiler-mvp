@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AttackPathGraph",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["scenario_id", "nodes", "evidence_edges", "projected_edges"],
+  "properties": {
+    "scenario_id": {"type": "string"},
+    "nodes": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/EntityNode"}
+    },
+    "evidence_edges": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/RelationshipEdge"}
+    },
+    "projected_edges": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/RelationshipEdge"}
+    }
+  },
+  "$defs": {
+    "EntityNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "type"],
+      "properties": {
+        "id": {"type": "string"},
+        "label": {"type": "string"},
+        "type": {"enum": ["attacker", "identity", "device", "role", "resource"]},
+        "criticality": {"type": "number", "minimum": 0, "maximum": 100},
+        "entry_prior": {"type": "number", "minimum": 0, "maximum": 1},
+        "aliases": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "metadata": {"type": "object"}
+      }
+    },
+    "RelationshipEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "source", "target", "type", "feasibility",
+        "evidence_ids", "first_seen", "last_seen"
+      ],
+      "properties": {
+        "id": {"type": "string"},
+        "source": {"type": "string"},
+        "target": {"type": "string"},
+        "type": {
+          "enum": [
+            "targeted", "authenticated_to", "session_on",
+            "assumed_role", "accessed", "observed"
+          ]
+        },
+        "feasibility": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "evidence_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string"}
+        },
+        "first_seen": {"type": "string", "format": "date-time"},
+        "last_seen": {"type": "string", "format": "date-time"},
+        "metadata": {"type": "object"}
+      }
+    }
+  }
+}

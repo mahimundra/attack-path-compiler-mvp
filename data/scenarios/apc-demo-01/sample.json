@@ -1,0 +1,52 @@
+{
+  "events": [
+    {
+      "event_id": "evt-000001",
+      "timestamp": "2026-01-15T09:00:01Z",
+      "source": "network",
+      "event_type": "network_connection",
+      "source_ref": "198.51.100.77",
+      "target_ref": "ana.rao",
+      "session_id": "sess-primary",
+      "success": true,
+      "transition_feasibility": 0.95,
+      "attributes": {}
+    },
+    {
+      "event_id": "evt-000002",
+      "timestamp": "2026-01-15T09:00:02Z",
+      "source": "auth",
+      "event_type": "authentication",
+      "source_ref": "ana.rao",
+      "target_ref": "ENG-LT-042",
+      "session_id": "sess-primary",
+      "success": true,
+      "transition_feasibility": 0.94,
+      "attributes": {}
+    },
+    {
+      "event_id": "evt-000003",
+      "timestamp": "2026-01-15T09:00:03Z",
+      "source": "cloud",
+      "event_type": "role_assumption",
+      "source_ref": "ENG-LT-042",
+      "target_ref": "etl-operator",
+      "session_id": "sess-primary",
+      "success": true,
+      "transition_feasibility": 0.93,
+      "attributes": {}
+    },
+    {
+      "event_id": "evt-000004",
+      "timestamp": "2026-01-15T09:00:04Z",
+      "source": "data",
+      "event_type": "data_access",
+      "source_ref": "etl-operator",
+      "target_ref": "customer-exports-prod",
+      "session_id": "sess-primary",
+      "success": true,
+      "transition_feasibility": 0.92,
+      "attributes": {}
+    }
+  ]
+}
